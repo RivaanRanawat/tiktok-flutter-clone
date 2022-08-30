@@ -491,7 +491,7 @@ packages:
     source: hosted
     version: "1.2.0"
   test_api:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: test_api
       url: "https://pub.dartlang.org"

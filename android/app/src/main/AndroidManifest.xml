@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.tiktok_tutorial">
+    package="com.example.test_code_widget_dart">
    <application
-        android:label="tiktok_tutorial"
+        android:label="test_code_widget_dart"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

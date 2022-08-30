@@ -1,6 +1,6 @@
 {
-    "name": "tiktok_tutorial",
-    "short_name": "tiktok_tutorial",
+    "name": "test_code_widget_dart",
+    "short_name": "test_code_widget_dart",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
