@@ -8,13 +8,15 @@ import 'package:tiktok_tutorial/views/screens/profile_screen.dart';
 import 'package:tiktok_tutorial/views/screens/search_screen.dart';
 import 'package:tiktok_tutorial/views/screens/video_screen.dart';
 
-List pages = [
-  VideoScreen(),
-  SearchScreen(),
-  const AddVideoScreen(),
-  Text('Messages Screen'),
-  ProfileScreen(uid: authController.user.uid),
-];
+List navigatePages(String uid) {
+  return [
+    VideoScreen(),
+    SearchScreen(),
+    const AddVideoScreen(),
+    const Text('Messages Screen'), // this is to do .. I will add chat functionality..
+    ProfileScreen(uid: uid),
+  ];
+}
 
 // COLORS
 const backgroundColor = Colors.black;

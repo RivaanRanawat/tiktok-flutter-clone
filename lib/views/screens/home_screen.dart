@@ -49,7 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: pages[pageIdx],
+         body: navigatePages(authController.user.uid)[pageIdx],
+         // Original Code has a bug where if you sign out (a person A) and log in with another account (PersonB)
+         // and go to the profile page using bottomNavigationItem, the previous profile (Person A) appers not the other one
+         // I coulnd't figure out why it happens, so I inserted the user uid directly into function that returns the page list
     );
   }
 }
