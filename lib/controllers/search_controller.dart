@@ -18,7 +18,10 @@ class SearchController extends GetxController {
       for (var elem in query.docs) {
         retVal.add(User.fromSnap(elem));
       }
-      return retVal;
+       List<User> outputList = retVal.where((item) => item.uid != authController.user.uid).toList();
+      return outputList;
+      // There was a bug where a search list returns the auth user when you type in the auth user name. 
+     
     }));
   }
 }
