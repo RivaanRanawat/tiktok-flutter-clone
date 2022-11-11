@@ -33,7 +33,7 @@ After cloning this repository, migrate to ```tiktok-flutter-clone``` folder. The
 Then run the following commands to run your app:
 ```bash
   flutter pub get
-  open -a simulator (to get iOS Simulator)
+  open -a simulator #(to get iOS Simulator)
   flutter run
 ```
 
