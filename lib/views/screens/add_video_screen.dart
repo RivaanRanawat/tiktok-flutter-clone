@@ -1,26 +1,31 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:get/get.dart';
 import 'package:tiktok_tutorial/constants.dart';
 import 'package:tiktok_tutorial/views/screens/confirm_screen.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddVideoScreen extends StatelessWidget {
   const AddVideoScreen({Key? key}) : super(key: key);
 
-  Future<void> pickVideo(ImageSource src, BuildContext context) async {
-    final XFile? video = await ImagePicker().pickVideo(source: src);
-    if (video != null) {
-      if (context.mounted) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => ConfirmScreen(
-              videoFile: File(video.path),
-              videoPath: video.path,
+  Future pickVideo(ImageSource src, BuildContext context) async {
+    try {
+      final video = await ImagePicker().pickVideo(source: src);
+      if (video != null) {
+        if (context.mounted) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ConfirmScreen(
+                videoFile: File(video.path),
+                videoPath: video.path,
+              ),
             ),
-          ),
-        );
+          );
+        }
       }
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
     }
   }
 
@@ -31,7 +36,24 @@ class AddVideoScreen extends StatelessWidget {
         children: [
           SimpleDialogOption(
             onPressed: () async {
-              await pickVideo(ImageSource.gallery, context);
+              try {
+                final video =
+                    await ImagePicker().pickVideo(source: ImageSource.gallery);
+                if (video != null) {
+                  if (context.mounted) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ConfirmScreen(
+                          videoFile: File(video.path),
+                          videoPath: video.path,
+                        ),
+                      ),
+                    );
+                  }
+                }
+              } catch (e) {
+                Get.snackbar('Error', e.toString());
+              }
             },
             child: const Row(
               children: [
@@ -47,7 +69,9 @@ class AddVideoScreen extends StatelessWidget {
             ),
           ),
           SimpleDialogOption(
-            onPressed: () => pickVideo(ImageSource.camera, context),
+            onPressed: () {
+              pickVideo(ImageSource.camera, context);
+            },
             child: const Row(
               children: [
                 Icon(Icons.camera_alt),
