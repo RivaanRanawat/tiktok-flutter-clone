@@ -12,7 +12,7 @@ class CommentScreen extends StatelessWidget {
   }) : super(key: key);
 
   final TextEditingController _commentController = TextEditingController();
-  CommentController commentController = Get.put(CommentController());
+  final CommentController commentController = Get.put(CommentController());
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class CommentScreen extends StatelessWidget {
                             children: [
                               Text(
                                 tago.format(
-                                  comment.datePublished.toDate(),
+                                  comment.datePublished,
                                 ),
                                 style: const TextStyle(
                                   fontSize: 12,

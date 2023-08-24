@@ -12,7 +12,7 @@ List pages = [
   VideoScreen(),
   SearchScreen(),
   const AddVideoScreen(),
-  Text('Messages Screen'),
+  const Text('Messages Screen'),
   ProfileScreen(uid: authController.user.uid),
 ];
 

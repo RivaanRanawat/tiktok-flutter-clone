@@ -8,17 +8,19 @@ import 'package:tiktok_tutorial/views/screens/confirm_screen.dart';
 class AddVideoScreen extends StatelessWidget {
   const AddVideoScreen({Key? key}) : super(key: key);
 
-  pickVideo(ImageSource src, BuildContext context) async {
-    final video = await ImagePicker().pickVideo(source: src);
+  Future<void> pickVideo(ImageSource src, BuildContext context) async {
+    final XFile? video = await ImagePicker().pickVideo(source: src);
     if (video != null) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => ConfirmScreen(
-            videoFile: File(video.path),
-            videoPath: video.path,
+      if (context.mounted) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ConfirmScreen(
+              videoFile: File(video.path),
+              videoPath: video.path,
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
   }
 
@@ -28,9 +30,11 @@ class AddVideoScreen extends StatelessWidget {
       builder: (context) => SimpleDialog(
         children: [
           SimpleDialogOption(
-            onPressed: () => pickVideo(ImageSource.gallery, context),
-            child: Row(
-              children: const [
+            onPressed: () async {
+              await pickVideo(ImageSource.gallery, context);
+            },
+            child: const Row(
+              children: [
                 Icon(Icons.image),
                 Padding(
                   padding: EdgeInsets.all(7.0),
@@ -44,8 +48,8 @@ class AddVideoScreen extends StatelessWidget {
           ),
           SimpleDialogOption(
             onPressed: () => pickVideo(ImageSource.camera, context),
-            child: Row(
-              children: const [
+            child: const Row(
+              children: [
                 Icon(Icons.camera_alt),
                 Padding(
                   padding: EdgeInsets.all(7.0),
@@ -59,8 +63,8 @@ class AddVideoScreen extends StatelessWidget {
           ),
           SimpleDialogOption(
             onPressed: () => Navigator.of(context).pop(),
-            child: Row(
-              children: const [
+            child: const Row(
+              children: [
                 Icon(Icons.cancel),
                 Padding(
                   padding: EdgeInsets.all(7.0),
