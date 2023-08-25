@@ -35,6 +35,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: CircularProgressIndicator(),
             );
           }
+
+          final fileParts = controller.user['profilePhoto'].split('/');
+          final String publicUrl =
+              supabase.storage.from(fileParts[0]).getPublicUrl(fileParts[1]);
+
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.black12,
@@ -59,25 +64,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(
                       child: Column(
                         children: [
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          //   children: [
-                          //     ClipOval(
-                          //       child: CachedNetworkImage(
-                          //         fit: BoxFit.cover,
-                          //         imageUrl: controller.user['profilePhoto'],
-                          //         height: 100,
-                          //         width: 100,
-                          //         placeholder: (context, url) =>
-                          //             const CircularProgressIndicator(),
-                          //         errorWidget: (context, url, error) =>
-                          //             const Icon(
-                          //           Icons.error,
-                          //         ),
-                          //       ),
-                          //     )
-                          //   ],
-                          // ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ClipOval(
+                                child: CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  imageUrl: publicUrl,
+                                  height: 100,
+                                  width: 100,
+                                  placeholder: (context, url) =>
+                                      const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(
+                                    Icons.error,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                           const SizedBox(
                             height: 15,
                           ),

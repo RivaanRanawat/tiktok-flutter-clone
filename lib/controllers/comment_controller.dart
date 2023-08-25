@@ -60,7 +60,7 @@ class CommentController extends GetxController {
           datePublished: DateTime.now(),
           likes: [],
           profilePhoto: (userDoc.data()! as dynamic)['profilePhoto'],
-          uid: authController.user.uid,
+          uid: authController.user.id,
           id: 'Comment $len',
         );
         await firestore

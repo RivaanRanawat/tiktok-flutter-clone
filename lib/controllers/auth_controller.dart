@@ -59,26 +59,18 @@ class AuthController extends GetxController {
     _pickedImage = Rx<File?>(File(pickedImage!.path));
   }
 
-  // // upload to firebase storage
-  // Future<String> _uploadToStorage(File image) async {
-  //   final String downloadUrl = await supabase.storage.from('avatars').upload(
-  //         "public/avatar_${user.id}.${image.path.split('.').last}",
-  //         image,
-  //         fileOptions: const FileOptions(cacheControl: '3600', upsert: false),
-  //       );
+  // upload to firebase storage
+  Future<String> _uploadToStorage(File image) async {
+    final String downloadUrl = await supabase.storage.from('avatars').upload(
+          "public/avatar_${user.id}.${image.path.split('.').last}",
+          image,
+          fileOptions: const FileOptions(cacheControl: '3600', upsert: false),
+        );
 
-  //   // TODO: fix this
-  //   // Reference ref = firebaseStorage
-  //   //     .ref()
-  //   //     .child('profilePics')
-  //   //     .child(firebaseAuth.currentUser!.uid);
+    // TODO: fix this
 
-  //   // UploadTask uploadTask = ref.putFile(image);
-  //   // TaskSnapshot snap = await uploadTask;
-  //   // String downloadUrl = await snap.ref.getDownloadURL();
-  //   // const downloadUrl = 'https://picsum.photos/250?image=9';
-  //   return downloadUrl;
-  // }
+    return downloadUrl;
+  }
 
   // registering the user
   void registerUser(
@@ -99,19 +91,20 @@ class AuthController extends GetxController {
           //   }
           // },
         );
-        final sbUser = cred.user;
+
+        _user.value = cred.user;
 
         // String downloadUrl = await _uploadToStorage(image);
         final String downloadUrl =
             await supabase.storage.from('avatars').upload(
-                  "avatar_${sbUser!.id}.${image.path.split('.').last}",
+                  "avatar_${user.id}.${image.path.split('.').last}",
                   image,
                   fileOptions:
                       const FileOptions(cacheControl: '3600', upsert: false),
                 );
 
         final userProfile = await supabase.from('profiles').insert(
-            {'id': sbUser.id, 'username': username, 'avatar_url': downloadUrl});
+            {'id': user.id, 'username': username, 'avatar_url': downloadUrl});
 
         print(userProfile);
 
@@ -149,8 +142,11 @@ class AuthController extends GetxController {
           password: password,
         );
 
-        final profile_data =
-            await supabase.from('profiles').select('id, username, avatar_url');
+        // final profile_data = await supabase
+        //     .from('profiles')
+        //     .select('id, username, avatar_url')
+        //     .eq('id', user.id)
+        //     .single();
       } else {
         Get.snackbar(
           'Error Logging in',
