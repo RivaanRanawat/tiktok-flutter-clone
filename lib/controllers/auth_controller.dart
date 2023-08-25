@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tiktok_tutorial/constants.dart';
+import 'package:tiktok_tutorial/models/user.dart';
 // import 'package:tiktok_tutorial/models/user.dart';
 import 'package:tiktok_tutorial/views/screens/auth/login_screen.dart';
 import 'package:tiktok_tutorial/views/screens/home_screen.dart';
@@ -23,9 +24,12 @@ class AuthController extends GetxController {
     super.onReady();
 
     _user = Rx<User?>(supabase.auth.currentUser);
-    supabase.auth.onAuthStateChange.listen((data) {
+    supabase.auth.onAuthStateChange.listen((data) async {
       final AuthChangeEvent event = data.event;
       final Session? session = data.session;
+
+      final profile_data =
+          await supabase.from('profiles').select('id, username, avatar_url');
 
       if (event == AuthChangeEvent.signedIn) {
         _user.value = session!.user;
@@ -55,20 +59,26 @@ class AuthController extends GetxController {
     _pickedImage = Rx<File?>(File(pickedImage!.path));
   }
 
-  // upload to firebase storage
-  Future<String> _uploadToStorage(File image) async {
-    // TODO: fix this
-    // Reference ref = firebaseStorage
-    //     .ref()
-    //     .child('profilePics')
-    //     .child(firebaseAuth.currentUser!.uid);
+  // // upload to firebase storage
+  // Future<String> _uploadToStorage(File image) async {
+  //   final String downloadUrl = await supabase.storage.from('avatars').upload(
+  //         "public/avatar_${user.id}.${image.path.split('.').last}",
+  //         image,
+  //         fileOptions: const FileOptions(cacheControl: '3600', upsert: false),
+  //       );
 
-    // UploadTask uploadTask = ref.putFile(image);
-    // TaskSnapshot snap = await uploadTask;
-    // String downloadUrl = await snap.ref.getDownloadURL();
-    const downloadUrl = 'https://picsum.photos/250?image=9';
-    return downloadUrl;
-  }
+  //   // TODO: fix this
+  //   // Reference ref = firebaseStorage
+  //   //     .ref()
+  //   //     .child('profilePics')
+  //   //     .child(firebaseAuth.currentUser!.uid);
+
+  //   // UploadTask uploadTask = ref.putFile(image);
+  //   // TaskSnapshot snap = await uploadTask;
+  //   // String downloadUrl = await snap.ref.getDownloadURL();
+  //   // const downloadUrl = 'https://picsum.photos/250?image=9';
+  //   return downloadUrl;
+  // }
 
   // registering the user
   void registerUser(
@@ -78,25 +88,40 @@ class AuthController extends GetxController {
           email.isNotEmpty &&
           password.isNotEmpty &&
           image != null) {
-        // save out user to our ath and firebase firestore
-        // UserCredential cred = await firebaseAuth.createUserWithEmailAndPassword(
-        //   email: email,
-        //   password: password,
-        // );
-        final cred =
-            await supabase.auth.signUp(email: email, password: password);
-        // final session = cred.session;
-        // final sbUser = cred.user;
+        // Create new user
+        final cred = await supabase.auth.signUp(
+          email: email,
+          password: password,
+          // options: {
+          //   data: {
+          //     'username': username,
+          //     'avatar_url': 'https://picsum.photos/250?image=9',
+          //   }
+          // },
+        );
+        final sbUser = cred.user;
 
         // String downloadUrl = await _uploadToStorage(image);
-        // User user = MyUser(
+        final String downloadUrl =
+            await supabase.storage.from('avatars').upload(
+                  "avatar_${sbUser!.id}.${image.path.split('.').last}",
+                  image,
+                  fileOptions:
+                      const FileOptions(cacheControl: '3600', upsert: false),
+                );
+
+        final userProfile = await supabase.from('profiles').insert(
+            {'id': sbUser.id, 'username': username, 'avatar_url': downloadUrl});
+
+        print(userProfile);
+
+        // MyUser user = MyUser(
         //   name: username,
         //   email: email,
-        //   id: sbUser!.id,
-        //   // profilePhoto: downloadUrl,
+        //   id: sbUser.id,
+        //   profilePhoto: downloadUrl,
         // );
         // print(user.toJson());
-        // await supabase.auth.updateUser({profilePhoto: downloadUrl}); // TODO: fix this
 
         // await firestore
         //     .collection('users')
@@ -123,6 +148,9 @@ class AuthController extends GetxController {
           email: email,
           password: password,
         );
+
+        final profile_data =
+            await supabase.from('profiles').select('id, username, avatar_url');
       } else {
         Get.snackbar(
           'Error Logging in',

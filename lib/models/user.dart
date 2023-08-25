@@ -3,7 +3,7 @@
 
 class MyUser {
   String name;
-  // String profilePhoto;
+  String profilePhoto;
   String email;
   String id;
 
@@ -11,12 +11,12 @@ class MyUser {
     required this.name,
     required this.email,
     required this.id,
-    // required this.profilePhoto,
+    required this.profilePhoto,
   });
 
   Map<String, dynamic> toJson() => {
         "name": name,
-        // "profilePhoto": profilePhoto,
+        "profilePhoto": profilePhoto,
         "email": email,
         "id": id,
       };
@@ -25,7 +25,7 @@ class MyUser {
     var snapshot = snap.data() as Map<String, dynamic>;
     return MyUser(
       email: snapshot['email'],
-      // profilePhoto: snapshot['profilePhoto'],
+      profilePhoto: snapshot['profilePhoto'],
       id: snapshot['id'],
       name: snapshot['name'],
     );
