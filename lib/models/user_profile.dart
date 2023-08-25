@@ -1,33 +1,33 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart';
 
-class MyUser {
-  String name;
-  String profilePhoto;
-  String email;
+class ProfileUser {
+  String username;
+  String avatarUrl;
+  String? email;
   String id;
 
-  MyUser({
-    required this.name,
+  ProfileUser({
+    required this.username,
     required this.email,
     required this.id,
-    required this.profilePhoto,
+    required this.avatarUrl,
   });
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "profilePhoto": profilePhoto,
+        "username": username,
+        "avatarUrl": avatarUrl,
         "email": email,
         "id": id,
       };
 
-  static MyUser fromSnap(snap) {
+  static ProfileUser fromSnap(snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
-    return MyUser(
+    return ProfileUser(
       email: snapshot['email'],
-      profilePhoto: snapshot['profilePhoto'],
+      avatarUrl: snapshot['avatarUrl'],
       id: snapshot['id'],
-      name: snapshot['name'],
+      username: snapshot['username'],
     );
   }
 }

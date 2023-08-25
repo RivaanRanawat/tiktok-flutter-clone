@@ -1,7 +1,7 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_tutorial/constants.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+// import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfileController extends GetxController {
   final Rx<Map<String, dynamic>> _user = Rx<Map<String, dynamic>>({});
@@ -25,18 +25,8 @@ class ProfileController extends GetxController {
     //   thumbnails.add((myVideos.docs[i].data() as dynamic)['thumbnail']);
     // }
 
-    final profile_data = await supabase
-        .from('profiles')
-        .select('id, username, avatar_url')
-        .eq('id', authController.user.id)
-        .single();
-
-    print(profile_data);
-    // DocumentSnapshot userDoc =
-    //     await firestore.collection('users').doc(_uid.value).get();
-    // final userData = userDoc.data()! as dynamic;
-    // String name = userData['name'];
-    String profilePhoto = profile_data['avatar_url'];
+    final profileData = authController.userProfile;
+    String profilePhoto = profileData!.avatarUrl;
     // int likes = 0;
     // int followers = 0;
     // int following = 0;
@@ -87,7 +77,7 @@ class ProfileController extends GetxController {
       'isFollowing': false,
       'likes': '0',
       'profilePhoto': profilePhoto,
-      'name': profile_data['username'],
+      'name': profileData.username,
       'thumbnails': thumbnails,
     };
     update();

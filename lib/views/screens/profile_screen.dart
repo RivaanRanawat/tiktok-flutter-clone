@@ -175,14 +175,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (widget.uid == authController.user.id) {
+                                  if (widget.uid ==
+                                      supabase.auth.currentUser!.id) {
                                     authController.signOut();
                                   } else {
                                     controller.followUser();
                                   }
                                 },
                                 child: Text(
-                                  widget.uid == authController.user.id
+                                  widget.uid == supabase.auth.currentUser!.id
                                       ? 'Sign Out'
                                       : controller.user['isFollowing']
                                           ? 'Unfollow'

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_tutorial/constants.dart';
-import 'package:tiktok_tutorial/models/user.dart';
+import 'package:tiktok_tutorial/models/user_profile.dart';
 
 class UserSearchController extends GetxController {
   final Rx<List<User>> _searchedUsers = Rx<List<User>>([]);
