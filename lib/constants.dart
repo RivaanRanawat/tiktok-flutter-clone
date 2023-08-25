@@ -2,18 +2,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tiktok_tutorial/controllers/auth_controller.dart';
-import 'package:tiktok_tutorial/views/screens/add_video_screen.dart';
+// import 'package:tiktok_tutorial/views/screens/add_video_screen.dart';
 import 'package:tiktok_tutorial/views/screens/profile_screen.dart';
-import 'package:tiktok_tutorial/views/screens/search_screen.dart';
-import 'package:tiktok_tutorial/views/screens/video_screen.dart';
+// import 'package:tiktok_tutorial/views/screens/search_screen.dart';
+// import 'package:tiktok_tutorial/views/screens/video_screen.dart';
 
 List pages = [
-  VideoScreen(),
-  SearchScreen(),
-  const AddVideoScreen(),
+  const Text('Video Screen'),
+  const Text('Search Screen'),
+  const Text('Add Video Screen'),
   const Text('Messages Screen'),
-  ProfileScreen(uid: authController.user.uid),
+  ProfileScreen(uid: authController.user.id),
+  // VideoScreen(),
+  // SearchScreen(),
+  // const AddVideoScreen(),
+  // const Text('Messages Screen'),
+  // ProfileScreen(uid: authController.user.uid),
 ];
 
 // COLORS
@@ -25,6 +31,9 @@ const borderColor = Colors.grey;
 var firebaseAuth = FirebaseAuth.instance;
 var firebaseStorage = FirebaseStorage.instance;
 var firestore = FirebaseFirestore.instance;
+
+// SUPABASE
+final supabase = Supabase.instance.client;
 
 // CONTROLLER
 var authController = AuthController.instance;

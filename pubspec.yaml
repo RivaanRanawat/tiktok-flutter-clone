@@ -33,6 +33,7 @@ dependencies:
   firebase_auth: ^4.8.0
   firebase_core: ^2.15.1
   firebase_storage: ^11.2.6
+  supabase_flutter: ^1.6.2
   flutter:
     sdk: flutter
   get: ^4.6.1

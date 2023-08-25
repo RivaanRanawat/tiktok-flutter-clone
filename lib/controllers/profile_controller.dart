@@ -15,62 +15,71 @@ class ProfileController extends GetxController {
 
   getUserData() async {
     List<String> thumbnails = [];
-    var myVideos = await firestore
-        .collection('videos')
-        .where('uid', isEqualTo: _uid.value)
-        .get();
+    // var myVideos = await firestore
+    //     .collection('videos')
+    //     .where('uid', isEqualTo: _uid.value)
+    //     .get();
 
-    for (int i = 0; i < myVideos.docs.length; i++) {
-      thumbnails.add((myVideos.docs[i].data() as dynamic)['thumbnail']);
-    }
+    // for (int i = 0; i < myVideos.docs.length; i++) {
+    //   thumbnails.add((myVideos.docs[i].data() as dynamic)['thumbnail']);
+    // }
 
-    DocumentSnapshot userDoc =
-        await firestore.collection('users').doc(_uid.value).get();
-    final userData = userDoc.data()! as dynamic;
-    String name = userData['name'];
-    String profilePhoto = userData['profilePhoto'];
-    int likes = 0;
-    int followers = 0;
-    int following = 0;
-    bool isFollowing = false;
+    // DocumentSnapshot userDoc =
+    //     await firestore.collection('users').doc(_uid.value).get();
+    // final userData = userDoc.data()! as dynamic;
+    // String name = userData['name'];
+    // String profilePhoto = userData['profilePhoto'];
+    // int likes = 0;
+    // int followers = 0;
+    // int following = 0;
+    // bool isFollowing = false;
 
-    for (var item in myVideos.docs) {
-      likes += (item.data()['likes'] as List).length;
-    }
-    var followerDoc = await firestore
-        .collection('users')
-        .doc(_uid.value)
-        .collection('followers')
-        .get();
-    var followingDoc = await firestore
-        .collection('users')
-        .doc(_uid.value)
-        .collection('following')
-        .get();
-    followers = followerDoc.docs.length;
-    following = followingDoc.docs.length;
+    // for (var item in myVideos.docs) {
+    //   likes += (item.data()['likes'] as List).length;
+    // }
+    // var followerDoc = await firestore
+    //     .collection('users')
+    //     .doc(_uid.value)
+    //     .collection('followers')
+    //     .get();
+    // var followingDoc = await firestore
+    //     .collection('users')
+    //     .doc(_uid.value)
+    //     .collection('following')
+    //     .get();
+    // followers = followerDoc.docs.length;
+    // following = followingDoc.docs.length;
 
-    firestore
-        .collection('users')
-        .doc(_uid.value)
-        .collection('followers')
-        .doc(authController.user.uid)
-        .get()
-        .then((value) {
-      if (value.exists) {
-        isFollowing = true;
-      } else {
-        isFollowing = false;
-      }
-    });
+    // firestore
+    //     .collection('users')
+    //     .doc(_uid.value)
+    //     .collection('followers')
+    //     .doc(authController.user.id)
+    //     .get()
+    //     .then((value) {
+    //   if (value.exists) {
+    //     isFollowing = true;
+    //   } else {
+    //     isFollowing = false;
+    //   }
+    // });
 
+    // _user.value = {
+    //   'followers': followers.toString(),
+    //   'following': following.toString(),
+    //   'isFollowing': isFollowing,
+    //   'likes': likes.toString(),
+    //   'profilePhoto': profilePhoto,
+    //   'name': name,
+    //   'thumbnails': thumbnails,
+    // };
     _user.value = {
-      'followers': followers.toString(),
-      'following': following.toString(),
-      'isFollowing': isFollowing,
-      'likes': likes.toString(),
-      'profilePhoto': profilePhoto,
-      'name': name,
+      'followers': '0',
+      'following': '0',
+      'isFollowing': false,
+      'likes': '0',
+      'profilePhoto': '',
+      'name': 'jham',
       'thumbnails': thumbnails,
     };
     update();
@@ -81,7 +90,7 @@ class ProfileController extends GetxController {
         .collection('users')
         .doc(_uid.value)
         .collection('followers')
-        .doc(authController.user.uid)
+        .doc(authController.user.id)
         .get();
 
     if (!doc.exists) {
@@ -89,11 +98,11 @@ class ProfileController extends GetxController {
           .collection('users')
           .doc(_uid.value)
           .collection('followers')
-          .doc(authController.user.uid)
+          .doc(authController.user.id)
           .set({});
       await firestore
           .collection('users')
-          .doc(authController.user.uid)
+          .doc(authController.user.id)
           .collection('following')
           .doc(_uid.value)
           .set({});
@@ -106,11 +115,11 @@ class ProfileController extends GetxController {
           .collection('users')
           .doc(_uid.value)
           .collection('followers')
-          .doc(authController.user.uid)
+          .doc(authController.user.id)
           .delete();
       await firestore
           .collection('users')
-          .doc(authController.user.uid)
+          .doc(authController.user.id)
           .collection('following')
           .doc(_uid.value)
           .delete();

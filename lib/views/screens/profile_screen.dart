@@ -59,25 +59,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(
                       child: Column(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ClipOval(
-                                child: CachedNetworkImage(
-                                  fit: BoxFit.cover,
-                                  imageUrl: controller.user['profilePhoto'],
-                                  height: 100,
-                                  width: 100,
-                                  placeholder: (context, url) =>
-                                      const CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(
-                                    Icons.error,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     ClipOval(
+                          //       child: CachedNetworkImage(
+                          //         fit: BoxFit.cover,
+                          //         imageUrl: controller.user['profilePhoto'],
+                          //         height: 100,
+                          //         width: 100,
+                          //         placeholder: (context, url) =>
+                          //             const CircularProgressIndicator(),
+                          //         errorWidget: (context, url, error) =>
+                          //             const Icon(
+                          //           Icons.error,
+                          //         ),
+                          //       ),
+                          //     )
+                          //   ],
+                          // ),
                           const SizedBox(
                             height: 15,
                           ),
@@ -170,14 +170,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Center(
                               child: InkWell(
                                 onTap: () {
-                                  if (widget.uid == authController.user.uid) {
+                                  if (widget.uid == authController.user.id) {
                                     authController.signOut();
                                   } else {
                                     controller.followUser();
                                   }
                                 },
                                 child: Text(
-                                  widget.uid == authController.user.uid
+                                  widget.uid == authController.user.id
                                       ? 'Sign Out'
                                       : controller.user['isFollowing']
                                           ? 'Unfollow'

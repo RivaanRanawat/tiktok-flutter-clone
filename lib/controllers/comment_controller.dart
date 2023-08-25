@@ -15,6 +15,13 @@ class CommentController extends GetxController {
   }
 
   getComment() async {
+    supabase
+        .from('videos')
+        .stream(primaryKey: ['id']).listen((List<Map<String, dynamic>> data) {
+      // Do something awesome with the data
+      // print(data);
+    });
+
     _comments.bindStream(
       firestore
           .collection('videos')
