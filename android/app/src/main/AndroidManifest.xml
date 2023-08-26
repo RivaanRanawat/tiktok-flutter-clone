@@ -1,7 +1,6 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.tiktok_tutorial">
-   <application
-        android:label="tiktok_tutorial"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application
+        android:label="tiktok_flutter_clone"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
