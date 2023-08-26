@@ -86,10 +86,10 @@ class CommentScreen extends StatelessWidget {
                             child: Icon(
                               Icons.favorite,
                               size: 25,
-                              color: comment.likes
-                                      .contains(authController.user.uid)
-                                  ? Colors.red
-                                  : Colors.white,
+                              color:
+                                  comment.likes.contains(authController.user.id)
+                                      ? Colors.red
+                                      : Colors.white,
                             ),
                           ),
                         );

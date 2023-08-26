@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/instance_manager.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tiktok_tutorial/constants.dart';
 import 'package:tiktok_tutorial/controllers/profile_controller.dart';
 
@@ -38,7 +39,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
           final fileParts = controller.user['profilePhoto'].split('/');
           final String publicUrl =
-              supabase.storage.from(fileParts[0]).getPublicUrl(fileParts[1]);
+              supabase.storage.from(fileParts[0]).getPublicUrl(fileParts[1],
+                  transform: const TransformOptions(
+                    width: 100,
+                    height: 100,
+                    resize: ResizeMode.cover,
+                  ));
 
           return Scaffold(
             appBar: AppBar(

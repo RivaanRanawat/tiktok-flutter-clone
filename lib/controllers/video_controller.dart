@@ -25,7 +25,7 @@ class VideoController extends GetxController {
 
   likeVideo(String id) async {
     DocumentSnapshot doc = await firestore.collection('videos').doc(id).get();
-    var uid = authController.user.uid;
+    var uid = authController.user.id;
     if ((doc.data()! as dynamic)['likes'].contains(uid)) {
       await firestore.collection('videos').doc(id).update({
         'likes': FieldValue.arrayRemove([uid]),

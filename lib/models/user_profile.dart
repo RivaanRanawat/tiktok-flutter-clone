@@ -21,6 +21,7 @@ class ProfileUser {
         "id": id,
       };
 
+// TODO: Fix this
   static ProfileUser fromSnap(snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
     return ProfileUser(

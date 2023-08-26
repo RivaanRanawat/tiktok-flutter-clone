@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Comment {
   String username;
@@ -29,7 +29,8 @@ class Comment {
         'id': id,
       };
 
-  static Comment fromSnap(DocumentSnapshot snap) {
+// TODO: Fix this
+  static Comment fromSnap(snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
     return Comment(
       username: snapshot['username'],
