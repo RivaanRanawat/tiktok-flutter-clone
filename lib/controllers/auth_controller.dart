@@ -8,7 +8,7 @@ import 'package:tiktok_tutorial/views/screens/auth/login_screen.dart';
 import 'package:tiktok_tutorial/views/screens/home_screen.dart';
 
 class AuthController extends GetxController {
-  static AuthController instance = Get.put(AuthController()); //Get.find();
+  static AuthController instance = Get.find();
   late Rx<User?> _user;
   late Rx<File?> _pickedImage;
   late Rx<ProfileUser?> _userProfile;

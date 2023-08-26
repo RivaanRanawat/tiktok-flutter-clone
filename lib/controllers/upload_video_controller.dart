@@ -75,8 +75,8 @@ class UploadVideoController extends GetxController {
       String thumbnail = await _uploadImageToStorage(uid, videoPath, uuid);
 
       // create video object
-      final newVideo = supabase.from('videos').insert({
-        // 'id': "Video $uuid",
+      final newVideo = await supabase.from('videos').insert({
+        // 'id': uuid,
         'uid': uid,
         'username': authController.userProfile!.username,
         'likes': 0,
@@ -89,19 +89,19 @@ class UploadVideoController extends GetxController {
         'thumbnail': thumbnail,
       });
 
-      Video video = Video(
-        username: authController.userProfile!.username,
-        uid: uid,
-        id: "Video $uuid",
-        likes: [],
-        commentCount: 0,
-        shareCount: 0,
-        songName: songName,
-        caption: caption,
-        videoUrl: videoUrl,
-        profilePhoto: authController.userProfile!.avatarUrl,
-        thumbnail: thumbnail,
-      );
+      // Video video = Video(
+      //   username: authController.userProfile!.username,
+      //   uid: uid,
+      //   id: "Video $uuid",
+      //   likes: [],
+      //   commentCount: 0,
+      //   shareCount: 0,
+      //   songName: songName,
+      //   caption: caption,
+      //   videoUrl: videoUrl,
+      //   profilePhoto: authController.userProfile!.avatarUrl,
+      //   thumbnail: thumbnail,
+      // );
 
       // await firestore.collection('videos').doc('Video $len').set(
       //       video.toJson(),

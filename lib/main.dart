@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tiktok_tutorial/constants.dart';
-// import 'package:tiktok_tutorial/controllers/auth_controller.dart';
+import 'package:tiktok_tutorial/controllers/auth_controller.dart';
 import 'package:tiktok_tutorial/views/screens/auth/login_screen.dart';
 // import 'package:tiktok_tutorial/views/screens/auth/signup_screen.dart';
 
@@ -14,7 +14,9 @@ void main() async {
     url: 'https://swaoxzcuelanpcmlpsjs.supabase.co',
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN3YW94emN1ZWxhbnBjbWxwc2pzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTI5Nzk3NTcsImV4cCI6MjAwODU1NTc1N30.azkfQFTJvrF3EdkOfNm0bJGzz0MyKM7hQ3ykv2Df-Og',
-  );
+  ).then((value) {
+    Get.put(AuthController());
+  });
 
   // await Firebase.initializeApp().then((value) {
   //   Get.put(AuthController());
