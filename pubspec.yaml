@@ -30,9 +30,6 @@ dependencies:
   cached_network_image: ^3.2.0
   cloud_firestore: ^4.9.0
   cupertino_icons: ^1.0.2
-  firebase_auth: ^4.8.0
-  firebase_core: ^2.15.1
-  firebase_storage: ^11.2.6
   supabase_flutter: ^1.6.2
   flutter:
     sdk: flutter

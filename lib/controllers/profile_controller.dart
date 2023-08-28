@@ -82,43 +82,44 @@ class ProfileController extends GetxController {
   }
 
   followUser() async {
-    var doc = await firestore
-        .collection('users')
-        .doc(_uid.value)
-        .collection('followers')
-        .doc(authController.user.id)
-        .get();
+    var doc = null; // TODO
+    // var doc = await firestore
+    //     .collection('users')
+    //     .doc(_uid.value)
+    //     .collection('followers')
+    //     .doc(authController.user.id)
+    //     .get();
 
     if (!doc.exists) {
-      await firestore
-          .collection('users')
-          .doc(_uid.value)
-          .collection('followers')
-          .doc(authController.user.id)
-          .set({});
-      await firestore
-          .collection('users')
-          .doc(authController.user.id)
-          .collection('following')
-          .doc(_uid.value)
-          .set({});
+      // await firestore
+      //     .collection('users')
+      //     .doc(_uid.value)
+      //     .collection('followers')
+      //     .doc(authController.user.id)
+      //     .set({});
+      // await firestore
+      //     .collection('users')
+      //     .doc(authController.user.id)
+      //     .collection('following')
+      //     .doc(_uid.value)
+      //     .set({});
       _user.value.update(
         'followers',
         (value) => (int.parse(value) + 1).toString(),
       );
     } else {
-      await firestore
-          .collection('users')
-          .doc(_uid.value)
-          .collection('followers')
-          .doc(authController.user.id)
-          .delete();
-      await firestore
-          .collection('users')
-          .doc(authController.user.id)
-          .collection('following')
-          .doc(_uid.value)
-          .delete();
+      // await firestore
+      //     .collection('users')
+      //     .doc(_uid.value)
+      //     .collection('followers')
+      //     .doc(authController.user.id)
+      //     .delete();
+      // await firestore
+      //     .collection('users')
+      //     .doc(authController.user.id)
+      //     .collection('following')
+      //     .doc(_uid.value)
+      //     .delete();
       _user.value.update(
         'followers',
         (value) => (int.parse(value) - 1).toString(),

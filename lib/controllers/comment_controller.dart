@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:tiktok_tutorial/constants.dart';
 import 'package:tiktok_tutorial/models/comment.dart';
@@ -43,26 +42,26 @@ class CommentController extends GetxController {
   postComment(String commentText) async {
     try {
       if (commentText.isNotEmpty) {
-        DocumentSnapshot userDoc = await firestore
-            .collection('users')
-            .doc(authController.user.id)
-            .get();
-        var allDocs = await firestore
-            .collection('videos')
-            .doc(_postId)
-            .collection('comments')
-            .get();
-        int len = allDocs.docs.length;
+        // DocumentSnapshot userDoc = await firestore
+        //     .collection('users')
+        //     .doc(authController.user.id)
+        //     .get();
+        // var allDocs = await firestore
+        //     .collection('videos')
+        //     .doc(_postId)
+        //     .collection('comments')
+        //     .get();
+        // int len = allDocs.docs.length;
 
-        Comment comment = Comment(
-          username: (userDoc.data()! as dynamic)['name'],
-          comment: commentText.trim(),
-          datePublished: DateTime.now(),
-          likes: [],
-          profilePhoto: (userDoc.data()! as dynamic)['profilePhoto'],
-          uid: authController.user.id,
-          id: 'Comment $len',
-        );
+        // Comment comment = Comment(
+        //   username: (userDoc.data()! as dynamic)['name'],
+        //   comment: commentText.trim(),
+        //   datePublished: DateTime.now(),
+        //   likes: [],
+        //   profilePhoto: (userDoc.data()! as dynamic)['profilePhoto'],
+        //   uid: authController.user.id,
+        //   id: 'Comment $len',
+        // );
         // await firestore
         //     .collection('videos')
         //     .doc(_postId)
@@ -87,31 +86,31 @@ class CommentController extends GetxController {
 
   likeComment(String id) async {
     var uid = authController.user.id;
-    DocumentSnapshot doc = await firestore
-        .collection('videos')
-        .doc(_postId)
-        .collection('comments')
-        .doc(id)
-        .get();
+    // DocumentSnapshot doc = await firestore
+    //     .collection('videos')
+    //     .doc(_postId)
+    //     .collection('comments')
+    //     .doc(id)
+    //     .get();
 
-    if ((doc.data()! as dynamic)['likes'].contains(uid)) {
-      await firestore
-          .collection('videos')
-          .doc(_postId)
-          .collection('comments')
-          .doc(id)
-          .update({
-        'likes': FieldValue.arrayRemove([uid]),
-      });
-    } else {
-      await firestore
-          .collection('videos')
-          .doc(_postId)
-          .collection('comments')
-          .doc(id)
-          .update({
-        'likes': FieldValue.arrayUnion([uid]),
-      });
-    }
+    // if ((doc.data()! as dynamic)['likes'].contains(uid)) {
+    //   await firestore
+    //       .collection('videos')
+    //       .doc(_postId)
+    //       .collection('comments')
+    //       .doc(id)
+    //       .update({
+    //     'likes': FieldValue.arrayRemove([uid]),
+    //   });
+    // } else {
+    //   await firestore
+    //       .collection('videos')
+    //       .doc(_postId)
+    //       .collection('comments')
+    //       .doc(id)
+    //       .update({
+    //     'likes': FieldValue.arrayUnion([uid]),
+    //   });
+    // }
   }
 }
