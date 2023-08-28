@@ -22,22 +22,22 @@ class CommentController extends GetxController {
       // print(data);
     });
 
-    _comments.bindStream(
-      firestore
-          .collection('videos')
-          .doc(_postId)
-          .collection('comments')
-          .snapshots()
-          .map(
-        (QuerySnapshot query) {
-          List<Comment> retValue = [];
-          for (var element in query.docs) {
-            retValue.add(Comment.fromSnap(element));
-          }
-          return retValue;
-        },
-      ),
-    );
+    // _comments.bindStream(
+    //   firestore
+    //       .collection('videos')
+    //       .doc(_postId)
+    //       .collection('comments')
+    //       .snapshots()
+    //       .map(
+    //     (QuerySnapshot query) {
+    //       List<Comment> retValue = [];
+    //       for (var element in query.docs) {
+    //         retValue.add(Comment.fromSnap(element));
+    //       }
+    //       return retValue;
+    //     },
+    //   ),
+    // );
   }
 
   postComment(String commentText) async {
@@ -63,19 +63,19 @@ class CommentController extends GetxController {
           uid: authController.user.id,
           id: 'Comment $len',
         );
-        await firestore
-            .collection('videos')
-            .doc(_postId)
-            .collection('comments')
-            .doc('Comment $len')
-            .set(
-              comment.toJson(),
-            );
-        DocumentSnapshot doc =
-            await firestore.collection('videos').doc(_postId).get();
-        await firestore.collection('videos').doc(_postId).update({
-          'commentCount': (doc.data()! as dynamic)['commentCount'] + 1,
-        });
+        // await firestore
+        //     .collection('videos')
+        //     .doc(_postId)
+        //     .collection('comments')
+        //     .doc('Comment $len')
+        //     .set(
+        //       comment.toJson(),
+        //     );
+        // DocumentSnapshot doc =
+        //     await firestore.collection('videos').doc(_postId).get();
+        // await firestore.collection('videos').doc(_postId).update({
+        //   'commentCount': (doc.data()! as dynamic)['commentCount'] + 1,
+        // });
       }
     } catch (e) {
       Get.snackbar(
