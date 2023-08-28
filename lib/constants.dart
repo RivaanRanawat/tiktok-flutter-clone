@@ -7,10 +7,10 @@ import 'package:tiktok_tutorial/controllers/auth_controller.dart';
 import 'package:tiktok_tutorial/views/screens/add_video_screen.dart';
 import 'package:tiktok_tutorial/views/screens/profile_screen.dart';
 // import 'package:tiktok_tutorial/views/screens/search_screen.dart';
-// import 'package:tiktok_tutorial/views/screens/video_screen.dart';
+import 'package:tiktok_tutorial/views/screens/video_screen.dart';
 
 List pages = [
-  const Text('Video Screen'),
+  VideoScreen(),
   const Text('Search Screen'),
   const AddVideoScreen(),
   const Text('Messages Screen'),

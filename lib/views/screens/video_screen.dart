@@ -82,10 +82,20 @@ class VideoScreen extends StatelessWidget {
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
             final data = videoController.videoList[index];
+            final videoFileParts = data.videoUrl.split('/');
+            final String publicVideoUrl = supabase.storage
+                .from(videoFileParts[0])
+                .getPublicUrl(videoFileParts[1]);
+
+            final profileFileParts = data.profilePhoto.split('/');
+            final String publicProfileUrl = supabase.storage
+                .from(profileFileParts[0])
+                .getPublicUrl(profileFileParts[1]);
+
             return Stack(
               children: [
                 VideoPlayerItem(
-                  videoUrl: data.videoUrl,
+                  videoUrl: publicVideoUrl,
                 ),
                 Column(
                   children: [
@@ -151,25 +161,25 @@ class VideoScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 buildProfile(
-                                  data.profilePhoto,
+                                  publicProfileUrl,
                                 ),
                                 Column(
                                   children: [
                                     InkWell(
-                                      onTap: () =>
-                                          videoController.likeVideo(data.id),
+                                      onTap: () => videoController
+                                          .likeVideo(data.id.toString()),
                                       child: Icon(
                                         Icons.favorite,
                                         size: 40,
-                                        color: data.likes.contains(
-                                                authController.user.uid)
-                                            ? Colors.red
-                                            : Colors.white,
+                                        // color: data.likes.contains(
+                                        //         authController.user.id)
+                                        //     ? Colors.red
+                                        //     : Colors.white,
                                       ),
                                     ),
                                     const SizedBox(height: 7),
                                     Text(
-                                      data.likes.length.toString(),
+                                      data.likes.toString(),
                                       style: const TextStyle(
                                         fontSize: 20,
                                         color: Colors.white,
@@ -183,7 +193,7 @@ class VideoScreen extends StatelessWidget {
                                       onTap: () => Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) => CommentScreen(
-                                            id: data.id,
+                                            id: data.id.toString(),
                                           ),
                                         ),
                                       ),
@@ -224,7 +234,7 @@ class VideoScreen extends StatelessWidget {
                                   ],
                                 ),
                                 CircleAnimation(
-                                  child: buildMusicAlbum(data.profilePhoto),
+                                  child: buildMusicAlbum(publicProfileUrl),
                                 ),
                               ],
                             ),

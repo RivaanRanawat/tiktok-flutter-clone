@@ -1,9 +1,7 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tiktok_tutorial/constants.dart';
-import 'package:tiktok_tutorial/models/video.dart';
+// import 'package:tiktok_tutorial/models/video.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:uuid/uuid.dart';
 
@@ -18,14 +16,6 @@ class UploadVideoController extends GetxController {
 
   Future<String> _uploadVideoToStorage(
       String uid, String videoPath, String uuid) async {
-    // Reference ref = firebaseStorage.ref().child('videos').child(id);
-
-    // UploadTask uploadTask = ref.putFile(await _compressVideo(videoPath));
-    // TaskSnapshot snap = await uploadTask;
-    // String downloadUrl = await snap.ref.getDownloadURL();
-
-    // final info = await VideoCompress.getMediaInfo(videoPath);
-
     final compressedVideo = await _compressVideo(videoPath);
     final filename = "video_${uid}_${uuid}.mov";
 
@@ -45,11 +35,6 @@ class UploadVideoController extends GetxController {
 
   Future<String> _uploadImageToStorage(
       String uid, String thumbnailPath, String uuid) async {
-    // Reference ref = firebaseStorage.ref().child('thumbnails').child(id);
-    // UploadTask uploadTask = ref.putFile(await _getThumbnail(thumbnailPath));
-    // TaskSnapshot snap = await uploadTask;
-    // String downloadUrl = await snap.ref.getDownloadURL();
-
     final String downloadUrl = await supabase.storage.from('videos').upload(
           "thumbnail_${uid}_${uuid}.jpg",
           await _getThumbnail(thumbnailPath),
@@ -62,20 +47,14 @@ class UploadVideoController extends GetxController {
   // upload video
   uploadVideo(String songName, String caption, String videoPath) async {
     try {
-      String uid =
-          supabase.auth.currentUser!.id; // firebaseAuth.currentUser!.uid;
-      // DocumentSnapshot userDoc =
-      //     await firestore.collection('users').doc(uid).get();
-      // get id
-      // var allDocs = await firestore.collection('videos').get();
-      // int len = allDocs.docs.length;
+      String uid = supabase.auth.currentUser!.id;
       const uuidClass = Uuid();
       final uuid = uuidClass.v4();
       String videoUrl = await _uploadVideoToStorage(uid, videoPath, uuid);
       String thumbnail = await _uploadImageToStorage(uid, videoPath, uuid);
 
       // create video object
-      final newVideo = await supabase.from('videos').insert({
+      await supabase.from('videos').insert({
         // 'id': uuid,
         'uid': uid,
         'username': authController.userProfile!.username,

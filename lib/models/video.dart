@@ -3,10 +3,10 @@
 class Video {
   String username;
   String uid;
-  String id;
-  List likes;
-  int commentCount;
-  int shareCount;
+  int id;
+  int likes;
+  String commentCount;
+  String shareCount;
   String songName;
   String caption;
   String videoUrl;
